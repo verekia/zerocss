@@ -1,38 +1,32 @@
 import ZeroCSS from './';
 
-const zerocss = new ZeroCSS([
-  { name: 'xs', width: 0 },
-  { name: 'sm', width: 544 },
-  { name: 'md', width: 768 },
-  { name: 'lg', width: 992 },
-  { name: 'xl', width: 1200 },
-]);
+const zerocss = new ZeroCSS({ xs: 0, sm: 544, md: 768, lg: 992, xl: 1200 });
 
-zerocss.addLoopUtils({ name: 'dis', property: 'display', isResponsive: false }, [
-  { b: 'block' },
-  { i: 'inline' },
-  { ib: 'inline-block' },
-  { 0: 'none' },
-]);
+zerocss.addLoopUtils({ name: 'dis', property: 'display', isResponsive: true }, {
+  0: 'none',
+  b: 'block',
+  i: 'inline',
+  ib: 'inline-block',
+});
 
-zerocss.addLoopUtils({ name: 'fl', property: 'float', isResponsive: false }, [
-  { l: 'left' },
-  { r: 'right' },
-  { 0: 'none' },
-]);
+zerocss.addLoopUtils({ name: 'fl', property: 'float', isResponsive: false }, {
+  0: 'none',
+  l: 'left',
+  r: 'right',
+});
 
-zerocss.addLoopUtils({ name: 'h', property: 'height', isResponsive: false, pseudo: '' }, [
-  { 12: '12px' },
-  { 14: '14px' },
-  { 16: '16px' },
-  { '100%': '100%' },
-]);
+zerocss.addLoopUtils({ name: 'h', property: 'height', isResponsive: false, pseudo: '' }, {
+  12: '12px',
+  14: '14px',
+  16: '16px',
+  '100%': '100%',
+});
 
-zerocss.addLoopUtils({ name: 'fs', property: 'font-size', isResponsive: false }, [
-  { 16: '16px' },
-  { 18: '18px' },
-  { 24: '24px' },
-]);
+zerocss.addLoopUtils({ name: 'fs', property: 'font-size', isResponsive: false }, {
+  16: '16px',
+  18: '18px',
+  24: '24px',
+});
 
 const spacingValues = [1, 2, 3, 4, 5];
 

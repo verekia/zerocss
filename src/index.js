@@ -1,8 +1,12 @@
 import fs from 'fs-extra';
+import _ from 'lodash';
 
 class ZeroCSS {
   constructor(breakpoints) {
-    this.breakpoints = breakpoints;
+    this.breakpoints = [];
+    _.forEach(breakpoints, (width, name) => {
+      this.breakpoints.push({ name, width });
+    });
     this.simpleUtils = [];
     this.loopUtils = [];
   }
@@ -17,26 +21,18 @@ class ZeroCSS {
 
   makeLoopUtils() {
     let output = '';
-    for (const loopUtil of this.loopUtils) {
-      const loopConfig = loopUtil.config;
-      const loopEntries = loopUtil.entries;
-      for (const loopEntry of loopEntries) {
-        let parensContent = '';
-        let value = '';
-        Object.keys(loopEntry).forEach((key) => {
-          parensContent = key;
-          value = loopEntry[key];
-        });
+    _.forEach(this.loopUtils, (loopUtil) => {
+      _.forEach(loopUtil.entries, (value, parensContent) => {
         output += this.makeOneUtil({
-          name: loopConfig.name,
+          name: loopUtil.config.name,
           parensContent,
-          isResponsive: loopConfig.isResponsive,
-          property: loopConfig.property,
+          isResponsive: loopUtil.config.isResponsive,
+          property: loopUtil.config.property,
           value,
-          pseudo: loopConfig.pseudo,
+          pseudo: loopUtil.config.pseudo,
         });
-      }
-    }
+      });
+    });
     return output;
   }
 
@@ -128,21 +124,22 @@ class ZeroCSS {
   }
 
   build(writePath, isVerbose) {
-    let output = '';
-    output += this.makeSimpleUtils();
-    output += this.makeLoopUtils();
+    if (!this.output) {
+      this.output = '';
+      this.output += this.makeSimpleUtils();
+      this.output += this.makeLoopUtils();
+    }
 
     if (writePath) {
-      fs.outputFileSync(`${__dirname}/${writePath}`, output);
+      fs.outputFileSync(`${__dirname}/${writePath}`, this.output);
     }
 
     if (isVerbose) {
       /* eslint-disable no-console */
-      console.log(`\n ${output}`);
+      console.log(`\n ${this.output}`);
       /* eslint-enable no-console */
     }
-
-    return output;
+    return this.output;
   }
 }
 
