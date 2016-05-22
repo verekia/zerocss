@@ -1,15 +1,10 @@
 import fs from 'fs-extra';
 
 class ZeroCSS {
-
   constructor(breakpoints) {
     this.breakpoints = breakpoints;
     this.simpleUtils = [];
     this.loopUtils = [];
-  }
-
-  setBreakpoints(breakpoints) {
-    this.breakpoints = breakpoints;
   }
 
   makeSimpleUtils() {
@@ -145,4 +140,4 @@ class ZeroCSS {
   }
 }
 
-export default new ZeroCSS();
+export default ZeroCSS;

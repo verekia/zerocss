@@ -1,6 +1,6 @@
-import zerocss from './';
+import ZeroCSS from './';
 
-zerocss.setBreakpoints([
+const zerocss = new ZeroCSS([
   { name: 'xs', width: 0 },
   { name: 'sm', width: 544 },
   { name: 'md', width: 768 },
