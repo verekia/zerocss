@@ -54,7 +54,7 @@ class ZeroCSS {
       } else if (currentLetter === 'a') {
         actualPseudoSelector = 'active';
       } else {
-        throw `Pseudo-selector shorthand suffix not recognized: ${currentLetter}`;
+        throw new Error(`Pseudo-selector shorthand suffix not recognized: ${currentLetter}`);
       }
       pseudoSuffix = `\\:${suffixShorthand}:${actualPseudoSelector}`;
     }
@@ -69,13 +69,15 @@ class ZeroCSS {
     output += `${coreRuleStart}${coreRuleEnd}\n`;
 
     if (isResponsive && this.breakpoints.length === 0) {
-      throw 'No responsive breakpoints defined. Use setRWDBreakpoints';
+      throw new Error('No responsive breakpoints defined. Use setRWDBreakpoints');
     }
 
     if (isResponsive) {
       for (const breakpoint of this.breakpoints) {
+        /* eslint-disable max-len */
         output += `@media (min-width: ${breakpoint.width}) { ${coreRuleStart}\\[${breakpoint.name}-up\\]${coreRuleEnd} }\n`;
         output += `@media (max-width: ${breakpoint.width}) { ${coreRuleStart}\\[${breakpoint.name}-down\\]${coreRuleEnd} }\n`;
+        /* eslint-enable max-len */
       }
     }
     return output;
@@ -87,10 +89,24 @@ class ZeroCSS {
 
     if (util.pseudo) {
       for (const letter of util.pseudo) {
-        output += this.assembleRule(util.name, escapedParensContent, util.property, util.value, this.buildPseudoSuffix(util.pseudo, letter), util.isResponsive);
+        output += this.assembleRule(
+          util.name,
+          escapedParensContent,
+          util.property,
+          util.value,
+          this.buildPseudoSuffix(util.pseudo, letter),
+          util.isResponsive
+        );
       }
     } else {
-      output += this.assembleRule(util.name, escapedParensContent, util.property, util.value, '', util.isResponsive);
+      output += this.assembleRule(
+        util.name,
+        escapedParensContent,
+        util.property,
+        util.value,
+        '',
+        util.isResponsive
+      );
     }
     return output;
   }
