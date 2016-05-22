@@ -8,51 +8,48 @@ const zerocss = new ZeroCSS([
   { name: 'xl', width: 1200 },
 ]);
 
+zerocss.addLoopUtils({ name: 'dis', property: 'display', isResponsive: false }, [
+  { b: 'block' },
+  { i: 'inline' },
+  { ib: 'inline-block' },
+  { 0: 'none' },
+]);
 
-// Simple Utils
+zerocss.addLoopUtils({ name: 'fl', property: 'float', isResponsive: false }, [
+  { l: 'left' },
+  { r: 'right' },
+  { 0: 'none' },
+]);
 
-zerocss.addSimpleUtil('dis', 'b', 'display', 'block');
-zerocss.addSimpleUtil('dis', 'i', 'display', 'inline');
-zerocss.addSimpleUtil('dis', 'ib', 'display', 'inline-block');
-zerocss.addSimpleUtil('c', 'reddark', 'color', 'reddark', null, 'hfa');
-zerocss.addSimpleUtil('fl', 'l', 'float', 'left', true);
+zerocss.addLoopUtils({ name: 'h', property: 'height', isResponsive: false, pseudo: '' }, [
+  { 12: '12px' },
+  { 14: '14px' },
+  { 16: '16px' },
+  { '100%': '100%' },
+]);
 
-
-// Loop Utils
-
-zerocss.addLoopUtils({
-  name: 'h',
-  property: 'height',
-  isResponsive: false,
-  pseudo: '' }, [
-    { parensContent: '12', value: '12px' },
-    { parensContent: '14', value: '14px' },
-    { parensContent: '16', value: '16px' },
-    { parensContent: '100%', value: '100%' },
-  ]
-);
-
-zerocss.addLoopUtils({
-  name: 'fs',
-  property: 'font-size',
-  isResponsive: false,
-  pseudo: 'hfa' }, [
-    { parensContent: '16', value: '16px' },
-    { parensContent: '18', value: '18px' },
-    { parensContent: '24', value: '24px' },
-  ]
-);
+zerocss.addLoopUtils({ name: 'fs', property: 'font-size', isResponsive: false }, [
+  { 16: '16px' },
+  { 18: '18px' },
+  { 24: '24px' },
+]);
 
 const spacingValues = [1, 2, 3, 4, 5];
 
 for (const s of spacingValues) {
   for (const type of [{ long: 'margin', short: 'm' }, { long: 'padding', short: 'p' }]) {
-    zerocss.addSimpleUtil(type.short, `t\\,${s}`, `${type.long}-top`, `${s}px`, true);
-    zerocss.addSimpleUtil(type.short, `b\\,${s}`, `${type.long}-bottom`, `${s}px`, true);
-    zerocss.addSimpleUtil(type.short, `l\\,${s}`, `${type.long}-left`, `${s}px`, true);
-    zerocss.addSimpleUtil(type.short, `p\\,${s}`, `${type.long}-right`, `${s}px`, true);
+    for (const direction of [
+      { short: 't', long: 'top' },
+      { short: 'b', long: 'bottom' },
+      { short: 'l', long: 'left' },
+      { short: 'r', long: 'right' },
+    ]) {
+      zerocss.addSimpleUtil(type.short,
+        `${direction.short}\,${s}`, `${type.long}-${direction.long}`, `${s}px`, false);
+    }
   }
 }
+
 
 zerocss.build('../dist/zerocss.css');
 zerocss.build('../dist/zerocss.min.css');

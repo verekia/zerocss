@@ -21,12 +21,18 @@ class ZeroCSS {
       const loopConfig = loopUtil.config;
       const loopEntries = loopUtil.entries;
       for (const loopEntry of loopEntries) {
+        let parensContent = '';
+        let value = '';
+        Object.keys(loopEntry).forEach((key) => {
+          parensContent = key;
+          value = loopEntry[key];
+        });
         output += this.makeOneUtil({
           name: loopConfig.name,
-          parensContent: loopEntry.parensContent,
+          parensContent,
           isResponsive: loopConfig.isResponsive,
           property: loopConfig.property,
-          value: loopEntry.value,
+          value,
           pseudo: loopConfig.pseudo,
         });
       }
