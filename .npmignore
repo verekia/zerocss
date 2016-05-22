@@ -3,3 +3,5 @@ src
 .eslintrc
 consumer.js
 tests
+src/all-utils.js
+.npmignore
