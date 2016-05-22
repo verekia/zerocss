@@ -1,3 +1,5 @@
 src
 .babelrc
+.eslintrc
 consumer.js
+tests
