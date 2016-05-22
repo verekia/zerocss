@@ -1,6 +1,6 @@
 {
   "name": "zerocss",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A CSS utility classes library",
   "main": "./lib/index.js",
   "scripts": {
