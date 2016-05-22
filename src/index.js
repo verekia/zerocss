@@ -5,4 +5,4 @@ class ZeroCSS {
   }
 }
 
-export default ZeroCSS;
+export default new ZeroCSS();
