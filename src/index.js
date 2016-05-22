@@ -1,5 +1,7 @@
 import fs from 'fs-extra';
+import path from 'path';
 import _ from 'lodash';
+
 
 class ZeroCSS {
   constructor(breakpoints) {
@@ -131,7 +133,8 @@ class ZeroCSS {
     }
 
     if (writePath) {
-      fs.outputFileSync(`${__dirname}/${writePath}`, this.output);
+      const appDir = path.dirname(require.main.filename);
+      fs.outputFileSync(`${appDir}/${writePath}`, this.output);
     }
 
     if (isVerbose) {
