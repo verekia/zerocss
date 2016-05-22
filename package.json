@@ -11,13 +11,13 @@
   },
   "main": "./lib/index.js",
   "scripts": {
-    "generatecss": "node lib/all-utils.js",
-    "build": "babel src -d lib && npm run generatecss",
-    "build:tests": "babel tests/src -d tests/lib",
+    "css": "node lib/all-utils.js",
+    "build": "babel src -d lib && npm run css",
     "consumer": "npm run build && node consumer.js",
-    "tests": "npm run build:tests && tape tests/lib/**/*.js | tap-spec",
+    "pretest": "babel tests/src -d tests/lib",
+    "test": "tape tests/lib/**/*.js | tap-spec",
     "clean": "rm -rf lib dist tests/lib",
-    "prepublish": "npm run build && npm run tests && echo 'Ready to publish!'"
+    "prepublish": "npm run build && npm test && echo 'Ready to publish!'"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
