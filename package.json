@@ -11,7 +11,7 @@
   },
   "main": "./lib/index.js",
   "scripts": {
-    "build": "babel src -d lib",
+    "build": "babel src -d lib && node lib/all-utils.js",
     "prepublish": "npm run build"
   },
   "devDependencies": {

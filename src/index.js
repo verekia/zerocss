@@ -132,7 +132,7 @@ class ZeroCSS {
     output += this.makeLoopUtils();
 
     if (writePath) {
-      fs.outputFileSync(writePath, output);
+      fs.outputFileSync(`${__dirname}/${writePath}`, output);
     }
 
     if (isVerbose) {
