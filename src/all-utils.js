@@ -37,22 +37,7 @@ zerocss.addLoopUtils({ name: 'deco', property: 'text-decoration', pseudo: 'hfa' 
   0: 'none', u: 'underline',
 });
 
-
-const spacingValues = [1, 2, 3, 4, 5];
-
-for (const s of spacingValues) {
-  for (const type of [{ long: 'margin', short: 'm' }, { long: 'padding', short: 'p' }]) {
-    for (const direction of [
-      { short: 't', long: 'top' },
-      { short: 'b', long: 'bottom' },
-      { short: 'l', long: 'left' },
-      { short: 'r', long: 'right' },
-    ]) {
-      zerocss.addSimpleUtil(type.short,
-        `${direction.short}\,${s}`, `${type.long}-${direction.long}`, `${s}px`, false);
-    }
-  }
-}
+zerocss.addSpacingHelperUtils([0, 1, 2]);
 
 zerocss.build('../dist/zerocss.css');
 zerocss.build('../dist/zerocss.min.css');

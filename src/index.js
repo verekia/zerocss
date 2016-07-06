@@ -17,6 +17,35 @@ export default class {
     this.zerocss.addLoopUtils({ config, entries });
   }
 
+  addSpacingHelperUtils(spacingValues, isResponsive = false) {
+    for (const s of spacingValues) {
+      for (const type of [{ long: 'margin', short: 'm' }, { long: 'padding', short: 'p' }]) {
+        this.addSimpleUtil(type.short, `t\,${s}`, `${type.long}-top`, `${s}px`, isResponsive);
+        this.addSimpleUtil(type.short, `b\,${s}`, `${type.long}-bottom`, `${s}px`, isResponsive);
+        this.addSimpleUtil(type.short, `l\,${s}`, `${type.long}-left`, `${s}px`, isResponsive);
+        this.addSimpleUtil(type.short, `r\,${s}`, `${type.long}-right`, `${s}px`, isResponsive);
+
+        this.addSimpleUtil(type.short, `t\,${s}\%`, `${type.long}-top`, `${s}%`, isResponsive);
+        this.addSimpleUtil(type.short, `b\,${s}\%`, `${type.long}-bottom`, `${s}%`, isResponsive);
+        this.addSimpleUtil(type.short, `l\,${s}\%`, `${type.long}-left`, `${s}%`, isResponsive);
+        this.addSimpleUtil(type.short, `r\,${s}\%`, `${type.long}-right`, `${s}%`, isResponsive);
+
+        this.addSimpleUtil(type.short, `v\,${s}`, `${type.long}-top`, `${s}px`, isResponsive);
+        this.addSimpleUtil(type.short, `v\,${s}`, `${type.long}-bottom`, `${s}px`, isResponsive);
+        this.addSimpleUtil(type.short, `h\,${s}`, `${type.long}-left`, `${s}px`, isResponsive);
+        this.addSimpleUtil(type.short, `h\,${s}`, `${type.long}-right`, `${s}px`, isResponsive);
+
+        this.addSimpleUtil(type.short, `v\,${s}\%`, `${type.long}-top`, `${s}%`, isResponsive);
+        this.addSimpleUtil(type.short, `v\,${s}\%`, `${type.long}-bottom`, `${s}%`, isResponsive);
+        this.addSimpleUtil(type.short, `h\,${s}\%`, `${type.long}-left`, `${s}%`, isResponsive);
+        this.addSimpleUtil(type.short, `h\,${s}\%`, `${type.long}-right`, `${s}%`, isResponsive);
+
+        this.addSimpleUtil(type.short, `${s}`, `${type.long}`, `${s}px`, isResponsive);
+        this.addSimpleUtil(type.short, `${s}\%`, `${type.long}`, `${s}%`, isResponsive);
+      }
+    }
+  }
+
   build(writePath, isVerbose) {
     if (!this.zerocss.output) {
       this.zerocss.assembleAllRules();
