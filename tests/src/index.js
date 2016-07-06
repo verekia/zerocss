@@ -1,3 +1,4 @@
+import { stripIndent } from 'common-tags';
 const test = require('tape');
 const ZeroCSS = require(`${__dirname}/../../lib`);
 
@@ -14,30 +15,39 @@ test('simple', (t) => {
 test('one-pseudo-hover', (t) => {
   const zerocss = new ZeroCSS();
 
-  const expected = '.name\\(parenscontent\\)\\:h:hover { property: value !important }\n';
+  const expected = stripIndent`
+  .name\\(parenscontent\\) { property: value !important }
+  .name\\(parenscontent\\)\\:h:hover { property: value !important }`;
+
   zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false, 'h');
 
-  t.equal(zerocss.build(), expected);
+  t.equal(zerocss.build(), `${expected}\n`);
   t.end();
 });
 
 test('one-pseudo-active', (t) => {
   const zerocss = new ZeroCSS();
 
-  const expected = '.name\\(parenscontent\\)\\:a:active { property: value !important }\n';
+  const expected = stripIndent`
+  .name\\(parenscontent\\) { property: value !important }
+  .name\\(parenscontent\\)\\:a:active { property: value !important }`;
+
   zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false, 'a');
 
-  t.equal(zerocss.build(), expected);
+  t.equal(zerocss.build(), `${expected}\n`);
   t.end();
 });
 
 test('one-pseudo-focus', (t) => {
   const zerocss = new ZeroCSS();
 
-  const expected = '.name\\(parenscontent\\)\\:f:focus { property: value !important }\n';
+  const expected = stripIndent`
+  .name\\(parenscontent\\) { property: value !important }
+  .name\\(parenscontent\\)\\:f:focus { property: value !important }`;
+
   zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false, 'f');
 
-  t.equal(zerocss.build(), expected);
+  t.equal(zerocss.build(), `${expected}\n`);
   t.end();
 });
 
@@ -52,14 +62,18 @@ test('one-pseudo-badpseudo', (t) => {
   t.end();
 });
 
-test('multi-pseudo-badpseudo', (t) => {
+test('multi-pseudo', (t) => {
   const zerocss = new ZeroCSS();
 
-  /* eslint-disable max-len */
-  const expected = '.name\\(parenscontent\\)\\:hfa:hover { property: value !important }\n.name\\(parenscontent\\)\\:hfa:focus { property: value !important }\n.name\\(parenscontent\\)\\:hfa:active { property: value !important }\n';
-  /* eslint-enable max-len */
-  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', null, 'hfa');
+  const expected = stripIndent`
+  .name\\(parenscontent\\) { property: value !important }
+  .name\\(parenscontent\\)\\:hfa:hover { property: value !important }
+  .name\\(parenscontent\\)\\:hfa:focus { property: value !important }
+  .name\\(parenscontent\\)\\:hfa:active { property: value !important }
+  `;
 
-  t.equal(zerocss.build(), expected);
+  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false, 'hfa');
+
+  t.equal(zerocss.build(), `${expected}\n`);
   t.end();
 });
