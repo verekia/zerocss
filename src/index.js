@@ -11,6 +11,7 @@ class ZeroCSS {
     });
     this.simpleUtils = [];
     this.loopUtils = [];
+    this.registeredResponsiveUtils = [];
   }
 
   makeSimpleUtils() {
@@ -28,12 +29,29 @@ class ZeroCSS {
         output += this.makeOneUtil({
           name: loopUtil.config.name,
           parensContent,
-          isResponsive: loopUtil.config.isResponsive,
+          isResponsive: loopUtil.config.isResponsive || true,
           property: loopUtil.config.property,
           value,
           pseudo: loopUtil.config.pseudo,
         });
       });
+    });
+    return output;
+  }
+
+  makeResponsiveUtils() {
+    let output = '\n';
+    _.forEach(this.breakpoints, (breakpoint) => {
+      output += `@media (min-width: ${breakpoint.width}) {\n`;
+      _.forEach(this.registeredResponsiveUtils, (util) => {
+        output += `  ${util.coreRuleStart}\\[${breakpoint.name}-up\\]${util.coreRuleEnd}\n`;
+      });
+      output += '}\n';
+      output += `@media (max-width: ${breakpoint.width}) {\n`;
+      _.forEach(this.registeredResponsiveUtils, (util) => {
+        output += `  ${util.coreRuleStart}\\[${breakpoint.name}-down\\]${util.coreRuleEnd}\n`;
+      });
+      output += '}\n';
     });
     return output;
   }
@@ -72,12 +90,7 @@ class ZeroCSS {
     }
 
     if (isResponsive) {
-      for (const breakpoint of this.breakpoints) {
-        /* eslint-disable max-len */
-        output += `@media (min-width: ${breakpoint.width}) { ${coreRuleStart}\\[${breakpoint.name}-up\\]${coreRuleEnd} }\n`;
-        output += `@media (max-width: ${breakpoint.width}) { ${coreRuleStart}\\[${breakpoint.name}-down\\]${coreRuleEnd} }\n`;
-        /* eslint-enable max-len */
-      }
+      this.registeredResponsiveUtils.push({ coreRuleStart, coreRuleEnd });
     }
     return output;
   }
@@ -110,7 +123,7 @@ class ZeroCSS {
     return output;
   }
 
-  addSimpleUtil(name, parensContent, property, value, isResponsive, pseudo) {
+  addSimpleUtil(name, parensContent, property, value, isResponsive = true, pseudo) {
     this.simpleUtils.push({
       name,
       parensContent,
@@ -130,6 +143,9 @@ class ZeroCSS {
       this.output = '';
       this.output += this.makeSimpleUtils();
       this.output += this.makeLoopUtils();
+      if (this.registeredResponsiveUtils.length > 0) {
+        this.output += this.makeResponsiveUtils();
+      }
     }
 
     if (writePath) {

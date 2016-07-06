@@ -5,7 +5,7 @@ test('simple', (t) => {
   const zerocss = new ZeroCSS();
 
   const expected = '.simple\\(parenscontent\\) { property: value !important }\n';
-  zerocss.addSimpleUtil('simple', 'parenscontent', 'property', 'value');
+  zerocss.addSimpleUtil('simple', 'parenscontent', 'property', 'value', false);
 
   t.equal(zerocss.build(), expected);
   t.end();
@@ -15,7 +15,7 @@ test('one-pseudo-hover', (t) => {
   const zerocss = new ZeroCSS();
 
   const expected = '.name\\(parenscontent\\)\\:h:hover { property: value !important }\n';
-  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', null, 'h');
+  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false, 'h');
 
   t.equal(zerocss.build(), expected);
   t.end();
@@ -25,7 +25,7 @@ test('one-pseudo-active', (t) => {
   const zerocss = new ZeroCSS();
 
   const expected = '.name\\(parenscontent\\)\\:a:active { property: value !important }\n';
-  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', null, 'a');
+  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false, 'a');
 
   t.equal(zerocss.build(), expected);
   t.end();
@@ -35,7 +35,7 @@ test('one-pseudo-focus', (t) => {
   const zerocss = new ZeroCSS();
 
   const expected = '.name\\(parenscontent\\)\\:f:focus { property: value !important }\n';
-  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', null, 'f');
+  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false, 'f');
 
   t.equal(zerocss.build(), expected);
   t.end();
@@ -46,7 +46,7 @@ test('one-pseudo-badpseudo', (t) => {
   /* eslint-disable no-useless-escape */
   const expectedRegExp = /Pseudo-selector shorthand suffix not recognized\: z/;
   /* eslint-enable no-useless-escape */
-  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', null, 'z');
+  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false, 'z');
 
   t.throws(() => { zerocss.build(); }, expectedRegExp);
   t.end();
