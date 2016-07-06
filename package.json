@@ -12,13 +12,13 @@
   "main": "./lib/index.js",
   "scripts": {
     "css": "node lib/all-utils.js",
-    "build": "babel src -d lib && npm run css",
-    "consumer": "npm run build && node consumer.js",
+    "start": "babel src -d lib && npm run css",
+    "consumer": "npm run start && node consumer.js",
     "pretest": "babel tests/src -d tests/lib",
-    "test": "npm run build && tape tests/lib/**/*.js | tap-spec",
+    "test": "npm run start && tape tests/lib/**/*.js | tap-spec",
     "clean": "rm -rf lib dist tests/lib",
     "lint": "eslint src/**/*.js tests/src/**/*.js",
-    "prepublish": "npm run lint && npm run build && npm test && echo 'Ready to publish!'"
+    "prepublish": "npm run lint && npm run start && npm test && echo 'Ready to publish!'"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
