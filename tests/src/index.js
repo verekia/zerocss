@@ -43,8 +43,9 @@ test('one-pseudo-focus', (t) => {
 
 test('one-pseudo-badpseudo', (t) => {
   const zerocss = new ZeroCSS();
-
+  /* eslint-disable no-useless-escape */
   const expectedRegExp = /Pseudo-selector shorthand suffix not recognized\: z/;
+  /* eslint-enable no-useless-escape */
   zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', null, 'z');
 
   t.throws(() => { zerocss.build(); }, expectedRegExp);

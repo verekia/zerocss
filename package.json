@@ -17,7 +17,8 @@
     "pretest": "babel tests/src -d tests/lib",
     "test": "npm run build && tape tests/lib/**/*.js | tap-spec",
     "clean": "rm -rf lib dist tests/lib",
-    "prepublish": "npm run build && npm test && echo 'Ready to publish!'"
+    "lint": "eslint src/**/*.js tests/src/**/*.js",
+    "prepublish": "npm run lint && npm run build && npm test && echo 'Ready to publish!'"
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
