@@ -2,6 +2,16 @@ import ZeroCSS from './';
 
 const zerocss = new ZeroCSS({ xs: 0, sm: 544, md: 768, lg: 992, xl: 1200 });
 
+zerocss.addSimpleUtil('TESTSIMPLE', '0', 'TESTSIMPLE', 0);
+zerocss.addSimpleUtil('TESTSIMPLE', '0', 'TESTSIMPLE', '0');
+zerocss.addSimpleUtil('TESTSIMPLE', '123', 'TESTSIMPLE', '123');
+zerocss.addSimpleUtil('TESTSIMPLE', '123px', 'TESTSIMPLE', 123);
+
+
+zerocss.addLoopUtils({ name: 'TESTLOOP', property: 'TESTLOOP' }, {
+  0: 0, zero: '0', 123: '123', '123px': 123,
+});
+
 zerocss.addLoopUtils({ name: 'dis', property: 'display' }, {
   0: 'none', b: 'block', i: 'inline', ib: 'inline-block', t: 'table', tc: 'table-cell',
 });
@@ -14,17 +24,17 @@ zerocss.addLoopUtils({ name: 'pos', property: 'position' }, {
   a: 'absolute', f: 'fixed', r: 'relative', s: 'static',
 });
 
-zerocss.addSimpleUtil('top', '0', 'top', '0');
-zerocss.addSimpleUtil('bottom', '0', 'bottom', '0');
-zerocss.addSimpleUtil('left', '0', 'left', '0');
-zerocss.addSimpleUtil('right', '0', 'right', '0');
+zerocss.addSimpleUtil('top', '0', 'top', 0);
+zerocss.addSimpleUtil('bottom', '0', 'bottom', 0);
+zerocss.addSimpleUtil('left', '0', 'left', 0);
+zerocss.addSimpleUtil('right', '0', 'right', 0);
 
 zerocss.addLoopUtils({ name: 'valign', property: 'vertical-align' }, {
   m: 'middle', t: 'top',
 });
 
 zerocss.addLoopUtils({ name: 'z', property: 'z-index' }, {
-  '-1': '-1', 0: '0', 1: '1', 2: '2', 10: '10',
+  '-1': '-1', 0: 0, 1: '1', 2: '2', 10: '10',
 });
 
 zerocss.addSimpleUtil('lh', '0', 'line-height', '0');

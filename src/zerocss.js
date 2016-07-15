@@ -1,3 +1,4 @@
+import { oneLine } from 'common-tags';
 import _ from 'lodash';
 
 class ZeroCSS {
@@ -46,18 +47,72 @@ class ZeroCSS {
 
   makeResponsiveUtils() {
     let output = '\n';
-    _.forEach(this.breakpoints, (breakpoint) => {
-      output += `@media (min-width: ${breakpoint.width}) {\n`;
-      _.forEach(this.registeredResponsiveUtils, (util) => {
-        output += `  ${util.coreRuleStart}\\[${breakpoint.name}-up\\]${util.coreRuleEnd}\n`;
-      });
-      output += '}\n';
-      output += `@media (max-width: ${breakpoint.width}) {\n`;
-      _.forEach(this.registeredResponsiveUtils, (util) => {
-        output += `  ${util.coreRuleStart}\\[${breakpoint.name}-down\\]${util.coreRuleEnd}\n`;
-      });
-      output += '}\n';
+    let breakpointIndex = 0;
+
+    /*
+    * [xs] case
+    */
+
+    output += `@media (max-width: ${this.breakpoints[1].width - 1}px) {\n`;
+    _.forEach(this.registeredResponsiveUtils, (util) => {
+      output += `  ${util.coreRuleStart}\\[${this.breakpoints[0].name}\\]${util.coreRuleEnd}\n`;
     });
+    output += '}\n';
+
+    _.forEach(this.breakpoints, (breakpoint) => {
+      /*
+       * [*-up] and [*-down] cases
+       * @media (min-width: -px)
+       * @media (max-width: -px)
+       *
+       * The breakpoints array gets its first item dropped because:
+       * 'xs-down' => nothing, [xs] should be used instead
+       * 'xs-up'   => nothing, general case should be used instead
+       *
+       * We also avoid the last loop entirely because:
+       * 'xl-down' => nothing, general case should be used instead
+       * 'xl-up'   => nothing, [xl] should be used instead
+       */
+      if (breakpointIndex < this.breakpoints.length - 1 && breakpointIndex > 0) {
+        output += `@media (min-width: ${breakpoint.width}px) {\n`;
+        _.forEach(this.registeredResponsiveUtils, (util) => {
+          output += `  ${util.coreRuleStart}\\[${breakpoint.name}-up\\]${util.coreRuleEnd}\n`;
+        });
+        output += '}\n';
+        output += `@media (max-width: ${this.breakpoints[breakpointIndex + 1].width - 1}px) {\n`;
+        _.forEach(this.registeredResponsiveUtils, (util) => {
+          output += `  ${util.coreRuleStart}\\[${breakpoint.name}-down\\]${util.coreRuleEnd}\n`;
+        });
+        output += '}\n';
+
+        /*
+        * [sm], [md], [lg] cases
+        * @media (min-width: -px) and (max-width: -px)
+        */
+
+        output += oneLine`
+          @media (min-width: ${breakpoint.width}px)
+          and (max-width: ${this.breakpoints[breakpointIndex + 1].width - 1}px) {`;
+        output += '\n';
+        _.forEach(this.registeredResponsiveUtils, (util) => {
+          output += `  ${util.coreRuleStart}\\[${breakpoint.name}\\]${util.coreRuleEnd}\n`;
+        });
+        output += '}\n';
+      }
+      breakpointIndex++;
+    });
+
+    /*
+    * [xl] case
+    */
+
+    output += `@media (min-width: ${this.breakpoints[this.breakpoints.length - 1].width}px) {\n`;
+    _.forEach(this.registeredResponsiveUtils, (util) => {
+      output += `  ${util.coreRuleStart}\\[${this.breakpoints[this.breakpoints.length
+        - 1].name}\\]${util.coreRuleEnd}\n`;
+    });
+    output += '}\n';
+
     return output;
   }
 
@@ -103,7 +158,6 @@ class ZeroCSS {
   makeOneUtil(util) {
     let output = '';
     const escapedParensContent = this.cssSelectorEscape(util.parensContent);
-
     output += this.assembleRule(util.name, escapedParensContent, util.property,
       util.value, '', util.isResponsive);
     if (util.pseudo) {
