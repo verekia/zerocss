@@ -77,3 +77,40 @@ test('multi-pseudo', (t) => {
   t.equal(zerocss.build(), `${expected}\n`);
   t.end();
 });
+
+test('px-cast-simple', (t) => {
+  const zerocss = new ZeroCSS();
+
+  zerocss.addSimpleUtil('test', '0num', 'test', 0, false);
+  zerocss.addSimpleUtil('test', '0str', 'test', '0', false);
+  zerocss.addSimpleUtil('test', '1str', 'test', '1', false);
+  zerocss.addSimpleUtil('test', '1num', 'test', 1, false);
+
+  const expected = stripIndent`
+  .test\\(0num\\) { test: 0 !important }
+  .test\\(0str\\) { test: 0 !important }
+  .test\\(1str\\) { test: 1 !important }
+  .test\\(1num\\) { test: 1px !important }
+  `;
+
+  t.equal(zerocss.build(), `${expected}\n`);
+  t.end();
+});
+
+test('px-cast-loop', (t) => {
+  const zerocss = new ZeroCSS();
+
+  zerocss.addLoopUtils({ name: 'test', property: 'test', isResponsive: false }, {
+    '0num': 0, '0str': '0', '1str': '1', '1num': 1,
+  });
+
+  const expected = stripIndent`
+  .test\\(0num\\) { test: 0 !important }
+  .test\\(0str\\) { test: 0 !important }
+  .test\\(1str\\) { test: 1 !important }
+  .test\\(1num\\) { test: 1px !important }
+  `;
+
+  t.equal(zerocss.build(), `${expected}\n`);
+  t.end();
+});

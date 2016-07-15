@@ -37,12 +37,14 @@ export default class {
       value: this.castUnitlessToPx(value), pseudo });
   }
 
-  addLoopUtils(config, entries) {
-    const entriesWithPx = {};
-    _.forOwn(entries, (value, key) => {
-      entriesWithPx[key] = this.castUnitlessToPx(value);
+  addLoopUtils(rawConfig, rawEntries) {
+    const config = _.cloneDeep(rawConfig);
+    const entries = {};
+    config.isResponsive = config.isResponsive === true;
+    _.forOwn(rawEntries, (value, key) => {
+      entries[key] = this.castUnitlessToPx(value);
     });
-    this.zerocss.addLoopUtils({ config, entries: entriesWithPx });
+    this.zerocss.addLoopUtils({ config, entries });
   }
 
   addSpacingHelperUtils(spacingValues, isResponsive = false) {

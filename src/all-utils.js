@@ -2,16 +2,6 @@ import ZeroCSS from './';
 
 const zerocss = new ZeroCSS({ xs: 0, sm: 544, md: 768, lg: 992, xl: 1200 });
 
-zerocss.addSimpleUtil('TESTSIMPLE', '0', 'TESTSIMPLE', 0);
-zerocss.addSimpleUtil('TESTSIMPLE', '0', 'TESTSIMPLE', '0');
-zerocss.addSimpleUtil('TESTSIMPLE', '123', 'TESTSIMPLE', '123');
-zerocss.addSimpleUtil('TESTSIMPLE', '123px', 'TESTSIMPLE', 123);
-
-
-zerocss.addLoopUtils({ name: 'TESTLOOP', property: 'TESTLOOP' }, {
-  0: 0, zero: '0', 123: '123', '123px': 123,
-});
-
 zerocss.addLoopUtils({ name: 'dis', property: 'display' }, {
   0: 'none', b: 'block', i: 'inline', ib: 'inline-block', t: 'table', tc: 'table-cell',
 });

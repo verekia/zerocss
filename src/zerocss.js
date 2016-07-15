@@ -35,7 +35,7 @@ class ZeroCSS {
         output += this.makeOneUtil({
           name: loopUtil.config.name,
           parensContent,
-          isResponsive: loopUtil.config.isResponsive || true,
+          isResponsive: loopUtil.config.isResponsive,
           property: loopUtil.config.property,
           value,
           pseudo: loopUtil.config.pseudo,
