@@ -38,7 +38,7 @@ class ZeroCSS {
           isResponsive: loopUtil.config.isResponsive,
           property: loopUtil.config.property,
           value,
-          pseudo: loopUtil.config.pseudo,
+          pseudoConfig: loopUtil.config.pseudoConfig,
         });
       });
     });
@@ -120,24 +120,6 @@ class ZeroCSS {
     return string.replace('%', '\\%').replace(',', '\\,');
   }
 
-  buildPseudoSuffix(suffixShorthand, currentLetter) {
-    let pseudoSuffix = '';
-    let actualPseudoSelector = null;
-    if (suffixShorthand) {
-      if (currentLetter === 'h') {
-        actualPseudoSelector = 'hover';
-      } else if (currentLetter === 'f') {
-        actualPseudoSelector = 'focus';
-      } else if (currentLetter === 'a') {
-        actualPseudoSelector = 'active';
-      } else {
-        throw new Error(`Pseudo-selector shorthand suffix not recognized: ${currentLetter}`);
-      }
-      pseudoSuffix = `\\:${suffixShorthand}:${actualPseudoSelector}`;
-    }
-    return pseudoSuffix;
-  }
-
   assembleRule(name, escapedParensContent, property, value, pseudoSuffix, isResponsive) {
     let output = '';
     const coreRuleStart = `.${name}\\(${escapedParensContent}\\)${pseudoSuffix}`;
@@ -160,10 +142,21 @@ class ZeroCSS {
     const escapedParensContent = this.cssSelectorEscape(util.parensContent);
     output += this.assembleRule(util.name, escapedParensContent, util.property,
       util.value, '', util.isResponsive);
-    if (util.pseudo) {
-      for (const letter of util.pseudo) {
-        output += this.assembleRule(util.name, escapedParensContent, util.property,
-          util.value, this.buildPseudoSuffix(util.pseudo, letter), util.isResponsive);
+    if (util.pseudoConfig && _.isObject(util.pseudoConfig)) {
+      _.forEach(util.pseudoConfig, (pseudoContent, pseudoShorthand) => {
+        if (_.isArray(pseudoContent)) {
+          pseudoContent.forEach((actualPseudo) => {
+            output += this.assembleRule(util.name, escapedParensContent, util.property,
+              util.value, `\\:${pseudoShorthand}:${actualPseudo}`, util.isResponsive);
+          });
+        } else {
+          output += this.assembleRule(util.name, escapedParensContent, util.property,
+            util.value, `\\:${pseudoShorthand}:${pseudoContent}`, util.isResponsive);
+        }
+      });
+    } else {
+      if (_.isString(util.pseudoConfig)) {
+        throw new Error(`The given pseudo suffix parameter is not an object: ${util.pseudoConfig}`);
       }
     }
     return output;

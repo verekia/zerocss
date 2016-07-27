@@ -12,53 +12,16 @@ test('simple', (t) => {
   t.end();
 });
 
-test('one-pseudo-hover', (t) => {
+test('one-pseudo', (t) => {
   const zerocss = new ZeroCSS();
 
   const expected = stripIndent`
   .name\\(parenscontent\\) { property: value !important }
-  .name\\(parenscontent\\)\\:h:hover { property: value !important }`;
+  .name\\(parenscontent\\)\\:toto:tata { property: value !important }`;
 
-  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false, 'h');
-
-  t.equal(zerocss.build(), `${expected}\n`);
-  t.end();
-});
-
-test('one-pseudo-active', (t) => {
-  const zerocss = new ZeroCSS();
-
-  const expected = stripIndent`
-  .name\\(parenscontent\\) { property: value !important }
-  .name\\(parenscontent\\)\\:a:active { property: value !important }`;
-
-  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false, 'a');
+  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false, { toto: ['tata'] });
 
   t.equal(zerocss.build(), `${expected}\n`);
-  t.end();
-});
-
-test('one-pseudo-focus', (t) => {
-  const zerocss = new ZeroCSS();
-
-  const expected = stripIndent`
-  .name\\(parenscontent\\) { property: value !important }
-  .name\\(parenscontent\\)\\:f:focus { property: value !important }`;
-
-  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false, 'f');
-
-  t.equal(zerocss.build(), `${expected}\n`);
-  t.end();
-});
-
-test('one-pseudo-badpseudo', (t) => {
-  const zerocss = new ZeroCSS();
-  /* eslint-disable no-useless-escape */
-  const expectedRegExp = /Pseudo-selector shorthand suffix not recognized\: z/;
-  /* eslint-enable no-useless-escape */
-  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false, 'z');
-
-  t.throws(() => { zerocss.build(); }, expectedRegExp);
   t.end();
 });
 
@@ -72,9 +35,40 @@ test('multi-pseudo', (t) => {
   .name\\(parenscontent\\)\\:hfa:active { property: value !important }
   `;
 
-  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false, 'hfa');
+  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false,
+    { hfa: ['hover', 'focus', 'active'] });
 
   t.equal(zerocss.build(), `${expected}\n`);
+  t.end();
+});
+
+test('multi-pseudo-multi-names', (t) => {
+  const zerocss = new ZeroCSS();
+
+  const expected = stripIndent`
+  .name\\(parenscontent\\) { property: value !important }
+  .name\\(parenscontent\\)\\:hfa:hover { property: value !important }
+  .name\\(parenscontent\\)\\:hfa:focus { property: value !important }
+  .name\\(parenscontent\\)\\:toto:titi { property: value !important }
+  .name\\(parenscontent\\)\\:tata:tutu { property: value !important }
+  .name\\(parenscontent\\)\\:tata:tete { property: value !important }
+  `;
+
+  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false,
+    { hfa: ['hover', 'focus'], toto: 'titi', tata: ['tutu', 'tete'] });
+
+  t.equal(zerocss.build(), `${expected}\n`);
+  t.end();
+});
+
+test('pseudo-bad-param', (t) => {
+  const zerocss = new ZeroCSS();
+  /* eslint-disable no-useless-escape */
+  const expectedRegExp = /The given pseudo suffix parameter is not an object\: abc/;
+  /* eslint-enable no-useless-escape */
+  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false, 'abc');
+
+  t.throws(() => { zerocss.build(); }, expectedRegExp);
   t.end();
 });
 
