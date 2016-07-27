@@ -12,6 +12,13 @@ test('simple', (t) => {
   t.end();
 });
 
+test('get-simple', (t) => {
+  const zerocss = new ZeroCSS();
+  const expected = '.simple\\(parenscontent\\) { property: value !important }\n';
+  t.equal(zerocss.getSimpleUtil('simple', 'parenscontent', 'property', 'value', false), expected);
+  t.end();
+});
+
 test('one-pseudo', (t) => {
   const zerocss = new ZeroCSS();
 

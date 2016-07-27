@@ -16,6 +16,10 @@ class ZeroCSS {
     this.simpleUtils.push(util);
   }
 
+  getSimpleUtil(util) {
+    return this.makeOneUtil(util);
+  }
+
   addLoopUtils(loopUtil) {
     this.loopUtils.push(loopUtil);
   }

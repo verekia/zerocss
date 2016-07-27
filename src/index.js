@@ -37,6 +37,11 @@ export default class {
       value: this.castUnitlessToPx(value), pseudoConfig });
   }
 
+  getSimpleUtil(name, parensContent, property, value, isResponsive = true, pseudoConfig) {
+    return this.zerocss.getSimpleUtil({ name, parensContent, isResponsive, property,
+      value: this.castUnitlessToPx(value), pseudoConfig });
+  }
+
   addLoopUtils(rawConfig, rawEntries) {
     const config = _.cloneDeep(rawConfig);
     const entries = {};
