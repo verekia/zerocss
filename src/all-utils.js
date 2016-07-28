@@ -33,7 +33,7 @@ zerocss.addLoopUtils({ name: 'op', property: 'opacity' }, {
   0: '0', 1: '1',
 });
 
-zerocss.addLoopUtils({ name: 'deco', property: 'text-decoration', pseudo: 'hfa' }, {
+zerocss.addLoopUtils({ name: 'deco', property: 'text-decoration' }, {
   0: 'none', u: 'underline',
 });
 

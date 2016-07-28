@@ -163,11 +163,11 @@ class ZeroCSS {
         if (_.isArray(pseudoContent)) {
           pseudoContent.forEach((actualPseudo) => {
             output += this.assembleRule(util.name, escapedParensContent, util.property,
-              util.value, `\\:${pseudoShorthand}:${actualPseudo}`, util.isResponsive).output;
+              util.value, `${pseudoShorthand}:${actualPseudo}`, util.isResponsive).output;
           });
         } else {
           output += this.assembleRule(util.name, escapedParensContent, util.property,
-            util.value, `\\:${pseudoShorthand}:${pseudoContent}`, util.isResponsive).output;
+            util.value, `${pseudoShorthand}:${pseudoContent}`, util.isResponsive).output;
         }
       });
     } else {

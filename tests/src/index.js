@@ -26,7 +26,8 @@ test('one-pseudo', (t) => {
   .name\\(parenscontent\\) { property: value !important }
   .name\\(parenscontent\\)\\:toto:tata { property: value !important }`;
 
-  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false, { toto: ['tata'] });
+  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false,
+    { '\\:toto': ['tata'] });
 
   t.equal(zerocss.build(), `${expected}\n`);
   t.end();
@@ -38,8 +39,8 @@ test('one-pseudo-no-base', (t) => {
   const expected = stripIndent`
   .name\\(parenscontent\\)\\:toto:tata { property: value !important }`;
 
-  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false, { toto: ['tata'] },
-    false);
+  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false,
+    { '\\:toto': ['tata'] }, false);
 
   t.equal(zerocss.build(), `${expected}\n`);
   t.end();
@@ -56,7 +57,7 @@ test('multi-pseudo', (t) => {
   `;
 
   zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false,
-    { hfa: ['hover', 'focus', 'active'] });
+    { '\\:hfa': ['hover', 'focus', 'active'] });
 
   t.equal(zerocss.build(), `${expected}\n`);
   t.end();
@@ -70,12 +71,12 @@ test('multi-pseudo-multi-names', (t) => {
   .name\\(parenscontent\\)\\:hfa:hover { property: value !important }
   .name\\(parenscontent\\)\\:hfa:focus { property: value !important }
   .name\\(parenscontent\\)\\:toto:titi { property: value !important }
-  .name\\(parenscontent\\)\\:tata:tutu { property: value !important }
-  .name\\(parenscontent\\)\\:tata:tete { property: value !important }
+  .name\\(parenscontent\\):tutu { property: value !important }
+  .name\\(parenscontent\\):tete { property: value !important }
   `;
 
   zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false,
-    { hfa: ['hover', 'focus'], toto: 'titi', tata: ['tutu', 'tete'] });
+    { '\\:hfa': ['hover', 'focus'], '\\:toto': 'titi', '': ['tutu', 'tete'] });
 
   t.equal(zerocss.build(), `${expected}\n`);
   t.end();
