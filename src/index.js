@@ -47,8 +47,8 @@ export default class {
   addLoopUtils(rawConfig, rawEntries) {
     const config = _.cloneDeep(rawConfig);
     const entries = {};
-    config.isResponsive = config.isResponsive === true;
-    config.pseudoBase = config.pseudoBase === true;
+    config.isResponsive = config.isResponsive === true; // false is default
+    config.pseudoBase = config.pseudoBase !== false; // true is default
     _.forOwn(rawEntries, (value, key) => {
       entries[key] = this.castUnitlessToPx(value);
     });
