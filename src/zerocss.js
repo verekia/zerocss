@@ -19,7 +19,7 @@ class ZeroCSS {
   getSimpleUtil(util) {
     const makeOneUtilResult = this.makeOneUtil(util);
     let output = makeOneUtilResult.output;
-    if (this.breakpoints.length > 0) {
+    if (this.breakpoints.length > 0 && util.isResponsive) {
       output += this.makeResponsiveUtils([{ coreRuleStart: makeOneUtilResult.coreRuleStart,
         coreRuleEnd: makeOneUtilResult.coreRuleEnd }]);
     }

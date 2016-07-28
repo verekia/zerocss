@@ -42,5 +42,3 @@ zerocss.addSpacingHelperUtils([0, 1, 2]);
 zerocss.build('../dist/zerocss.css');
 zerocss.build('../dist/zerocss.min.css');
 zerocss.build('../dist/_zerocss.scss');
-
-console.log(zerocss.getSimpleUtil('abc', '0', 'display', 'none'));
