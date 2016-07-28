@@ -17,7 +17,13 @@ class ZeroCSS {
   }
 
   getSimpleUtil(util) {
-    return this.makeOneUtil(util);
+    const makeOneUtilResult = this.makeOneUtil(util);
+    let output = makeOneUtilResult.output;
+    if (this.breakpoints.length > 0) {
+      output += this.makeResponsiveUtils([{ coreRuleStart: makeOneUtilResult.coreRuleStart,
+        coreRuleEnd: makeOneUtilResult.coreRuleEnd }]);
+    }
+    return output;
   }
 
   addLoopUtils(loopUtil) {
@@ -27,7 +33,7 @@ class ZeroCSS {
   makeSimpleUtils() {
     let output = '';
     for (const util of this.simpleUtils) {
-      output += this.makeOneUtil(util);
+      output += this.makeOneUtil(util).output;
     }
     return output;
   }
@@ -43,13 +49,13 @@ class ZeroCSS {
           property: loopUtil.config.property,
           value,
           pseudoConfig: loopUtil.config.pseudoConfig,
-        });
+        }).output;
       });
     });
     return output;
   }
 
-  makeResponsiveUtils() {
+  makeResponsiveUtils(utils = this.registeredResponsiveUtils) {
     let output = '\n';
     let breakpointIndex = 0;
 
@@ -58,7 +64,7 @@ class ZeroCSS {
     */
 
     output += `@media (max-width: ${this.breakpoints[1].width - 1}px) {\n`;
-    _.forEach(this.registeredResponsiveUtils, (util) => {
+    _.forEach(utils, (util) => {
       output += `  ${util.coreRuleStart}\\[${this.breakpoints[0].name}\\]${util.coreRuleEnd}\n`;
     });
     output += '}\n';
@@ -79,12 +85,12 @@ class ZeroCSS {
        */
       if (breakpointIndex < this.breakpoints.length - 1 && breakpointIndex > 0) {
         output += `@media (min-width: ${breakpoint.width}px) {\n`;
-        _.forEach(this.registeredResponsiveUtils, (util) => {
+        _.forEach(utils, (util) => {
           output += `  ${util.coreRuleStart}\\[${breakpoint.name}-up\\]${util.coreRuleEnd}\n`;
         });
         output += '}\n';
         output += `@media (max-width: ${this.breakpoints[breakpointIndex + 1].width - 1}px) {\n`;
-        _.forEach(this.registeredResponsiveUtils, (util) => {
+        _.forEach(utils, (util) => {
           output += `  ${util.coreRuleStart}\\[${breakpoint.name}-down\\]${util.coreRuleEnd}\n`;
         });
         output += '}\n';
@@ -98,7 +104,7 @@ class ZeroCSS {
           @media (min-width: ${breakpoint.width}px)
           and (max-width: ${this.breakpoints[breakpointIndex + 1].width - 1}px) {`;
         output += '\n';
-        _.forEach(this.registeredResponsiveUtils, (util) => {
+        _.forEach(utils, (util) => {
           output += `  ${util.coreRuleStart}\\[${breakpoint.name}\\]${util.coreRuleEnd}\n`;
         });
         output += '}\n';
@@ -111,7 +117,7 @@ class ZeroCSS {
     */
 
     output += `@media (min-width: ${this.breakpoints[this.breakpoints.length - 1].width}px) {\n`;
-    _.forEach(this.registeredResponsiveUtils, (util) => {
+    _.forEach(utils, (util) => {
       output += `  ${util.coreRuleStart}\\[${this.breakpoints[this.breakpoints.length
         - 1].name}\\]${util.coreRuleEnd}\n`;
     });
@@ -138,24 +144,26 @@ class ZeroCSS {
     if (isResponsive) {
       this.registeredResponsiveUtils.push({ coreRuleStart, coreRuleEnd });
     }
-    return output;
+    return { output, coreRuleStart, coreRuleEnd };
   }
 
   makeOneUtil(util) {
     let output = '';
     const escapedParensContent = this.cssSelectorEscape(util.parensContent);
-    output += this.assembleRule(util.name, escapedParensContent, util.property,
+    const assembleRuleResult = this.assembleRule(util.name, escapedParensContent, util.property,
       util.value, '', util.isResponsive);
+    output += assembleRuleResult.output;
+
     if (util.pseudoConfig && _.isObject(util.pseudoConfig)) {
       _.forEach(util.pseudoConfig, (pseudoContent, pseudoShorthand) => {
         if (_.isArray(pseudoContent)) {
           pseudoContent.forEach((actualPseudo) => {
             output += this.assembleRule(util.name, escapedParensContent, util.property,
-              util.value, `\\:${pseudoShorthand}:${actualPseudo}`, util.isResponsive);
+              util.value, `\\:${pseudoShorthand}:${actualPseudo}`, util.isResponsive).output;
           });
         } else {
           output += this.assembleRule(util.name, escapedParensContent, util.property,
-            util.value, `\\:${pseudoShorthand}:${pseudoContent}`, util.isResponsive);
+            util.value, `\\:${pseudoShorthand}:${pseudoContent}`, util.isResponsive).output;
         }
       });
     } else {
@@ -163,7 +171,8 @@ class ZeroCSS {
         throw new Error(`The given pseudo suffix parameter is not an object: ${util.pseudoConfig}`);
       }
     }
-    return output;
+    return { output, coreRuleStart: assembleRuleResult.coreRuleStart,
+      coreRuleEnd: assembleRuleResult.coreRuleEnd };
   }
 
   assembleAllRules() {
