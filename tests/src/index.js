@@ -32,6 +32,19 @@ test('one-pseudo', (t) => {
   t.end();
 });
 
+test('one-pseudo-no-base', (t) => {
+  const zerocss = new ZeroCSS();
+
+  const expected = stripIndent`
+  .name\\(parenscontent\\)\\:toto:tata { property: value !important }`;
+
+  zerocss.addSimpleUtil('name', 'parenscontent', 'property', 'value', false, { toto: ['tata'] },
+    false);
+
+  t.equal(zerocss.build(), `${expected}\n`);
+  t.end();
+});
+
 test('multi-pseudo', (t) => {
   const zerocss = new ZeroCSS();
 

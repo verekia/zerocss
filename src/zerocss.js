@@ -49,6 +49,7 @@ class ZeroCSS {
           property: loopUtil.config.property,
           value,
           pseudoConfig: loopUtil.config.pseudoConfig,
+          pseudoBase: loopUtil.config.pseudoBase,
         }).output;
       });
     });
@@ -152,7 +153,10 @@ class ZeroCSS {
     const escapedParensContent = this.cssSelectorEscape(util.parensContent);
     const assembleRuleResult = this.assembleRule(util.name, escapedParensContent, util.property,
       util.value, '', util.isResponsive);
-    output += assembleRuleResult.output;
+
+    if (!util.pseudoConfig || util.pseudoBase) {
+      output += assembleRuleResult.output;
+    }
 
     if (util.pseudoConfig && _.isObject(util.pseudoConfig)) {
       _.forEach(util.pseudoConfig, (pseudoContent, pseudoShorthand) => {

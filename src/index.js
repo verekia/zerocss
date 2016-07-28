@@ -32,14 +32,16 @@ export default class {
     return strValue;
   }
 
-  addSimpleUtil(name, parensContent, property, value, isResponsive = true, pseudoConfig) {
+  addSimpleUtil(name, parensContent, property, value, isResponsive = true, pseudoConfig,
+    pseudoBase = true) {
     this.zerocss.addSimpleUtil({ name, parensContent, isResponsive, property,
-      value: this.castUnitlessToPx(value), pseudoConfig });
+      value: this.castUnitlessToPx(value), pseudoConfig, pseudoBase });
   }
 
-  getSimpleUtil(name, parensContent, property, value, isResponsive = true, pseudoConfig) {
+  getSimpleUtil(name, parensContent, property, value, isResponsive = true, pseudoConfig,
+    pseudoBase = true) {
     return this.zerocss.getSimpleUtil({ name, parensContent, isResponsive, property,
-      value: this.castUnitlessToPx(value), pseudoConfig });
+      value: this.castUnitlessToPx(value), pseudoConfig, pseudoBase });
   }
 
   addLoopUtils(rawConfig, rawEntries) {
