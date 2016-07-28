@@ -48,6 +48,7 @@ export default class {
     const config = _.cloneDeep(rawConfig);
     const entries = {};
     config.isResponsive = config.isResponsive === true;
+    config.pseudoBase = config.pseudoBase === true;
     _.forOwn(rawEntries, (value, key) => {
       entries[key] = this.castUnitlessToPx(value);
     });
