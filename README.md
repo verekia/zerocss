@@ -4,7 +4,7 @@ A CSS Utility Classes Generator.
 
 [![Build Status](https://travis-ci.org/verekia/zerocss.svg?branch=master)](https://travis-ci.org/verekia/zerocss)
 
-ZeroCSS is basically <a href="http://acss.io/" target="_blank">Atomic CSS</a>, with *less features*, but *more flexible class names*.
+ZeroCSS is basically [Atomic CSS](http://acss.io/), with *less features*, but *more flexible class names*.
 
 When to use ZeroCSS:
 - To build a prototype very fast
@@ -50,3 +50,5 @@ island: 'bgc(lightgray) brad(small) p(20)'
 # sidebar.mustache:
 <div class="{{ component.island }}">
 ```
+
+Atomic CSS has a tool called Atomizer that scans your project for the class names you actually use. Since ZeroCSS doesn't have such feature, all the generated class names end up in the CSS output file. This file can be quite big, particularly if you need a lot of responsive spacing utils. I built a whole website using ZeroCSS only, and the utils file was roughly 80kb (with no other CSS file needed), which is still quite reasonable to me.
