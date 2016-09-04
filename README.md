@@ -37,6 +37,8 @@ Which will generate the following extract of code (double backslash removed for 
 [...]
 ```
 
+## Reusable Components
+
 If you find yourself using some particular utility classes together often, you could combine them
 on the back-end using a config file that you pass from your controller to your templating engine:
 
@@ -50,5 +52,7 @@ island: 'bgc(lightgray) brad(small) p(20)'
 # sidebar.mustache:
 <div class="{{ component.island }}">
 ```
+
+## File Size
 
 Atomic CSS has a tool called Atomizer that scans your project for the class names you actually use. Since ZeroCSS doesn't have such feature, all the generated class names end up in the CSS output file. This file can be quite big, particularly if you need a lot of responsive spacing utils. I built a whole website using ZeroCSS only, and the utils file was roughly 80kb (with no other CSS file needed), which is still quite reasonable to me.
