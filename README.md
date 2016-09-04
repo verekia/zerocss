@@ -1,10 +1,10 @@
-# zerocss
+# ZeroCSS
 
-A CSS utility classes generator
+A CSS Utility Classes Generator.
 
 [![Build Status](https://travis-ci.org/verekia/zerocss.svg?branch=master)](https://travis-ci.org/verekia/zerocss)
 
-ZeroCSS is basically Atomic CSS, with less features, but more flexible class names.
+ZeroCSS is basically [Atomic CSS](http://acss.io/), with *less features*, but *more flexible class names*.
 
 When to use ZeroCSS:
 - To build a prototype very fast
@@ -16,7 +16,7 @@ I do not recommend using ZeroCSS for professional projects, since support is not
 Here is an [example](https://github.com/verekia/zerocss/tree/master/src/example) of setup to generate utility classes using ZeroCSS.
 
 As you can see, the ZeroCSS API lets you create utility classes like this:
-```
+```javascript
 {
   config: { name: 'fl', property: 'float', isResponsive: true },
   entries: { 0: 'none', l: 'left', r: 'right' },
@@ -25,7 +25,7 @@ As you can see, the ZeroCSS API lets you create utility classes like this:
 
 Which will generate the following extract of code (double backslash removed for readability):
 
-```
+```css
 [...]
 
 @media (min-width: 992px) {
