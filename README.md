@@ -4,7 +4,7 @@ A CSS Utility Classes Generator.
 
 [![Build Status](https://travis-ci.org/verekia/zerocss.svg?branch=master)](https://travis-ci.org/verekia/zerocss)
 
-ZeroCSS is basically [Atomic CSS](http://acss.io/), with *less features*, but *more flexible class names*.
+ZeroCSS is basically <a href="http://acss.io/" target="_blank">Atomic CSS</a>, with *less features*, but *more flexible class names*.
 
 When to use ZeroCSS:
 - To build a prototype very fast
