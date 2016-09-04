@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 
 // This could happen in your Gulpfile for instance:
 
