@@ -16,7 +16,7 @@
     "pretest": "npm run start && babel tests/src -d tests/lib",
     "test": "tape tests/lib/**/*.js | tap-spec",
     "clean": "rm -rf lib dist tests/lib",
-    "lint": "eslint src/**/*.js tests/src/**/*.js",
+    "lint": "eslint --ext .js 'src/**' 'tests/src/**'",
     "prepublish": "npm run lint && npm run start && npm test && echo 'Ready to publish!'"
   },
   "devDependencies": {
