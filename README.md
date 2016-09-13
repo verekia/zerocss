@@ -55,4 +55,6 @@ island: 'bgc(lightgray) brad(small) p(20)'
 
 ## File Size
 
-Atomic CSS has a tool called Atomizer that scans your project for the class names you actually use. Since ZeroCSS doesn't have such feature, all the generated class names end up in the CSS output file. This file can be quite big, particularly if you need a lot of responsive spacing utils. I built a whole website using ZeroCSS only, and the utils file was roughly 80kb (with no other CSS file needed), which is still quite reasonable to me.
+Atomic CSS has a tool called Atomizer that scans your project for the class names you actually use. Since ZeroCSS doesn't have such feature, all the generated class names end up in the CSS output file. This file can be quite big, particularly if you need a lot of responsive spacing utils. I built a whole website using ZeroCSS only, and the utils file was roughly 60kb (with no other CSS file needed), which is still quite reasonable to me.
+
+If you want to trim down some unused CSS from your generated file, process it with [PurifyCSS](https://github.com/purifycss/purifycss).
