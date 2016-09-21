@@ -213,7 +213,7 @@ config.fontSizes.forEach((fontSize) => {
  *   <div class="revealed(a) reveal(b,block):hfa">
  *     <div class="reveal(b)">
  *
- * That's typically used for our navigation that has sub-sub-menus ('Marques les plus recherchées').
+ * That's typically used for our navigation that has sub-sub-menus.
  */
 
 
