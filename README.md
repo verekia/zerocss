@@ -4,7 +4,7 @@ A CSS Utility Classes Generator.
 
 [![Build Status](https://travis-ci.org/verekia/zerocss.svg?branch=master)](https://travis-ci.org/verekia/zerocss)
 
-ZeroCSS is a tool to *generate your own CSS utility classes*. For instance it lets you generate classes like `class="c(primary)"` that you can use everywhere in your code to apply `color: [your primary color]` to elements. It is basically [Atomic CSS](http://acss.io/), with *less features*, but *more flexible class names*.
+ZeroCSS is a tool to **generate your own CSS utility classes**. For instance it lets you generate classes like `class="c(primary)"` that you can use everywhere in your code to apply `color: [your primary color]` to elements. It is basically [Atomic CSS](http://acss.io/), with *less features*, but *more flexible class names*.
 
 When to use ZeroCSS:
 - To build a prototype very fast
