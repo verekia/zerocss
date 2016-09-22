@@ -26,6 +26,14 @@ Yes, writing code in such fashion is similar to writing inline styles, but it is
 
 It surely does add complexity to your HTML files, but the fact that you don't have any CSS code to write and maintain makes this approach a great compromise.
 
+You can also define **variables** in JavaScript to name anything you'd like (colors, spacing, fonts...):
+
+```html
+<div class="bgc(primary) m(b,section) ff(myspecialfont)">
+  I'm a colored box that has a standardized margin-bottom (30px for instance), and a custom font.
+</div>
+```
+
 ## Setup
 
 Here is an [example](https://github.com/verekia/zerocss/tree/master/src/example) of setup to generate utility classes using ZeroCSS.
