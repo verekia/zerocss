@@ -32,7 +32,7 @@ You can also define **variables** in JavaScript to name anything you'd like (col
 </div>
 ```
 
-It surely does add complexity to your HTML files, but the fact that you don't have any CSS code to write and maintain makes this approach a great compromise.
+Following a utility-classes-only approach surely does add complexity to your HTML files, but the fact that you don't have any CSS code to write and maintain makes it a great compromise. CSS has a lot of flaws, and this approach solves some of them, like the *specificity war* and *lack of encapsulation*.
 
 ## Setup
 
