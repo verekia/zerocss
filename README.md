@@ -13,6 +13,16 @@ When to use ZeroCSS:
 
 I do not recommend using ZeroCSS for professional projects, since support is not guaranteed, and you will likely run into quirks that might be difficult to solve.
 
+## What it looks like
+
+```html
+<div class="bgc(ddd) p(20) fl(r)[md-up] w(100%)[sm-down]">
+  I'm a gray box with 20px padding, floating to the right on desktop, and full-width on mobile.
+</div>
+```
+
+## Setup
+
 Here is an [example](https://github.com/verekia/zerocss/tree/master/src/example) of setup to generate utility classes using ZeroCSS.
 
 As you can see, the ZeroCSS API lets you create utility classes like this:
