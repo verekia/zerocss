@@ -11,7 +11,7 @@ When to use ZeroCSS:
 - For a non-critical project like your blog or a personal project
 - If you don't like Atomic CSS' class names, but really want to only use utility classes instead of writing CSS
 
-Note: I do not recommend using ZeroCSS for professional projects, since support is not guaranteed, and you will likely run into quirks that might be difficult to solve. Use at your own risk! I use it and I love it.
+Note: I do not recommend using ZeroCSS for professional projects, since support is not guaranteed, and you will likely run into quirks that might be difficult to solve. Use at your own risk!
 
 ## What it looks like
 
