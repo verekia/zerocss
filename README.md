@@ -16,10 +16,14 @@ I do not recommend using ZeroCSS for professional projects, since support is not
 ## What it looks like
 
 ```html
-<div class="bgc(ddd) p(20) fl(r)[md-up] w(100%)[sm-down]">
-  I'm a gray box with 20px padding, floating to the right on desktop, and full-width on mobile.
+<div class="bgc(ddd) bgc(ccc):h p(20) fl(r)[md-up] w(100%)[sm-down]">
+  I'm a gray box with 20px padding, floating to the right on desktop, and full-width on mobile. When hovered I get a bit darker.
 </div>
 ```
+
+Yes, writing code in such fashion is similar to writing inline styles, but it is much more elegant, compact, and lets you use media-queries and pseudo classes, which you can't do with inline styles.
+
+It surely does add complexity to your HTML files, but the fact that you don't have any CSS code to write and maintain makes this approach a great compromise.
 
 ## Setup
 
